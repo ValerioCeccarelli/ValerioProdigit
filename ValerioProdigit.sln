@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValerioProdigit.Api", "ValerioProdigit.Api\ValerioProdigit.Api.csproj", "{B59078F4-B5B6-438B-94CC-EAC891FF5723}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValerioProdigit.Api.Test", "ValerioProdigit.Api.Test\ValerioProdigit.Api.Test.csproj", "{8D41CFD7-26F0-4FBF-9CC5-FCB39F56A38D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B59078F4-B5B6-438B-94CC-EAC891FF5723}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B59078F4-B5B6-438B-94CC-EAC891FF5723}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B59078F4-B5B6-438B-94CC-EAC891FF5723}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B59078F4-B5B6-438B-94CC-EAC891FF5723}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D41CFD7-26F0-4FBF-9CC5-FCB39F56A38D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D41CFD7-26F0-4FBF-9CC5-FCB39F56A38D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D41CFD7-26F0-4FBF-9CC5-FCB39F56A38D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D41CFD7-26F0-4FBF-9CC5-FCB39F56A38D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

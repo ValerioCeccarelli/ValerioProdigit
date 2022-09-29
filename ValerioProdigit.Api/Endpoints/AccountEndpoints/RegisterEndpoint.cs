@@ -7,6 +7,7 @@ using ValerioProdigit.Api.Models;
 using ValerioProdigit.Api.Swagger;
 using ValerioProdigit.Api.Validators;
 using ValerioProdigit.Api.Auth;
+using ValerioProdigit.Api.Emails;
 
 namespace ValerioProdigit.Api.Endpoints.AccountEndpoints;
 
@@ -26,7 +27,7 @@ public class RegisterEndpoint : IEndpointsMapper
         UserManager<ApplicationUser> userManager,
         IValidator<RegisterRequest> validator,
         EmailSettings emailSettings,
-        JwtGenerator jwtGenerator)
+        IEmail emailSender)
     {
         var validationResult = validator.Validate(registerRequest);
         if (!validationResult.Succeeded)
@@ -57,12 +58,19 @@ public class RegisterEndpoint : IEndpointsMapper
         var role = ChooseRole(user.Email, emailSettings);
         await userManager.AddToRoleAsync(user, role);
 
-        var token = await jwtGenerator.Generate(user);
+        var confirmationToken = await userManager.GenerateEmailConfirmationTokenAsync(user);
+        var isEmailDelivered = await emailSender
+            .SendRegisterConfirmation(user.Email, $"{user.Name} {user.Surname}", confirmationToken);
 
-        return Results.Ok(new RegisterResponse()
+        if (!isEmailDelivered)
         {
-            Token = token
-        });
+            return Results.BadRequest(new RegisterResponse()
+            {
+                Error = "Some errors occurs"
+            });
+        }
+        
+        return Results.Ok(new RegisterResponse());
     }
     
     private static string ChooseRole(string email, EmailSettings emailSettings)

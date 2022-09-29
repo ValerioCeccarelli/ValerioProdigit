@@ -1,5 +1,6 @@
 using ValerioProdigit.Api.Auth;
 using ValerioProdigit.Api.Data;
+using ValerioProdigit.Api.Emails;
 using ValerioProdigit.Api.Endpoints;
 using ValerioProdigit.Api.Hashids;
 using ValerioProdigit.Api.Models;
@@ -15,6 +16,7 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
     .AddEntityFrameworkStores<AppDbContext>();
 
 builder.ConfigureHashId();
+builder.ConfigureEmailService();
 
 builder.ConfigureJwtAuthentication();
 builder.ConfigureCustomAuthorization();

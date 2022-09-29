@@ -19,7 +19,7 @@ public class JwtGenerator
         _jwtSettings = jwtSettings;
     }
 
-    public async Task<string> Generate(ApplicationUser user)
+    public async Task<string> GenerateAsync(ApplicationUser user)
     {
         var claims = new List<Claim>(6)
         {

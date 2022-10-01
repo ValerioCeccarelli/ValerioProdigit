@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using ValerioProdigit.Api.Auth;
 using ValerioProdigit.Api.Data;
 using ValerioProdigit.Api.Emails;
@@ -13,7 +14,8 @@ builder.ConfigureAppDbContext();
 
 builder.ConfigurePasswordOptions();
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
-    .AddEntityFrameworkStores<AppDbContext>();
+    .AddEntityFrameworkStores<AppDbContext>()
+    .AddDefaultTokenProviders();
 
 builder.ConfigureHashId();
 builder.ConfigureEmailService();

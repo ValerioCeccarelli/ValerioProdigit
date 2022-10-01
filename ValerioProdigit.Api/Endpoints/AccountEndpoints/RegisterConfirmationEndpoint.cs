@@ -1,5 +1,6 @@
 using HashidsNet;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using ValerioProdigit.Api.Models;
 
 namespace ValerioProdigit.Api.Endpoints.AccountEndpoints;
@@ -8,13 +9,13 @@ public class RegisterConfirmationEndpoint : IEndpointsMapper
 {
     public void MapEndpoints(WebApplication app)
     {
-        app.MapPost("Account/RegisterConfirmation/{userId}/{token}", RegisterConfirmation)
+        app.MapPost("Account/RegisterConfirmation", RegisterConfirmation)
             .WithTags("Account");
     }
 
     private static async Task<IResult> RegisterConfirmation(
-        string userId,
-        string token,
+        [FromQuery] string userId,
+        [FromQuery] string token,
         UserManager<ApplicationUser> userManager,
         IHashids hashids)
     {

@@ -1,4 +1,6 @@
 using System.Net;
+using System.Web;
+using HashidsNet;
 using Microsoft.AspNetCore.Identity;
 using ValerioProdigit.Api.Configurations;
 using ValerioProdigit.Api.Dtos.Account;
@@ -6,6 +8,7 @@ using ValerioProdigit.Api.Models;
 using ValerioProdigit.Api.Swagger;
 using ValerioProdigit.Api.Validators;
 using ValerioProdigit.Api.Auth;
+using ValerioProdigit.Api.Auth.Services;
 using ValerioProdigit.Api.Emails;
 
 namespace ValerioProdigit.Api.Endpoints.AccountEndpoints;
@@ -26,7 +29,9 @@ public class RegisterEndpoint : IEndpointsMapper
         UserManager<ApplicationUser> userManager,
         IValidator<RegisterRequest> validator,
         EmailSettings emailSettings,
-        IEmail emailSender)
+        IEmail emailSender,
+        IHashids hashids,
+        HttpContext httpContext)
     {
         var validationResult = validator.Validate(registerRequest);
         if (!validationResult.Succeeded)
@@ -58,8 +63,12 @@ public class RegisterEndpoint : IEndpointsMapper
         await userManager.AddToRoleAsync(user, role);
 
         var confirmationToken = await userManager.GenerateEmailConfirmationTokenAsync(user);
+        var encodedConfirmationToken = HttpUtility.UrlEncode(confirmationToken);
+        var userId = hashids.Encode(user.Id);
+        var link = $"{httpContext.Request.Scheme}://{httpContext.Request.Host}/Account/RegisterConfirmation?userId={userId}&token={encodedConfirmationToken}";
+
         var isEmailDelivered = await emailSender
-            .SendRegisterConfirmation(user.Email, $"{user.Name} {user.Surname}", confirmationToken);
+            .SendRegisterConfirmation(user.Email, $"{user.Name} {user.Surname}", link);
 
         if (!isEmailDelivered)
         {
@@ -79,7 +88,7 @@ public class RegisterEndpoint : IEndpointsMapper
         {
             return Role.Admin;
         }
-        else if (emailSettings.AllowedTeacherDomains.Contains(domain))
+        if (emailSettings.AllowedTeacherDomains.Contains(domain))
         {
             return Role.Teacher;
         }

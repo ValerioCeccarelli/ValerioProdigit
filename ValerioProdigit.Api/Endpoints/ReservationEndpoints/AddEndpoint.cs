@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ValerioProdigit.Api.Data;
 using ValerioProdigit.Api.Dtos.Reservation;
+using ValerioProdigit.Api.Emails;
 using ValerioProdigit.Api.Models;
 using ValerioProdigit.Api.Swagger;
 
@@ -28,7 +29,8 @@ public class AddEndpoint : IEndpointsMapper
 		AppDbContext context,
 		UserManager<ApplicationUser> userManager,
 		HttpContext httpContext,
-		IHashids hashids)
+		IHashids hashids,
+		IEmailSender emailSender)
 	{
 		if (!hashids.TryDecodeSingle(lessonId, out var id))
 		{
@@ -113,6 +115,9 @@ public class AddEndpoint : IEndpointsMapper
 				Error = "Some error occurred"
 			});
 		}
+		
+		var user = await userManager.FindByIdAsync(userId.ToString());
+		await emailSender.SendReservationCreated(user, reservation);
 		
 		var path = httpContext.Request.Scheme + "://" + httpContext.Request.Host + "/Reservation/Get/" + hashids.Encode(reservation.Id);
 		return Results.Created(path, new AddReservationResponse());

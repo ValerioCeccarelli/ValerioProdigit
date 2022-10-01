@@ -25,13 +25,13 @@ public class MyWebApplicationFactory : WebApplicationFactory<Program>
 		});
 	}
 
-	public EmailTestService EmailTestService { get; } = new();
+	public EmailSenderTestService EmailSenderTestService { get; } = new();
 	private void EmailServiceConfiguration(IServiceCollection services)
 	{
 		var descriptor = services
-			.SingleOrDefault(d => d.ServiceType == typeof(IEmail));
+			.SingleOrDefault(d => d.ServiceType == typeof(IEmailSender));
 		services.Remove(descriptor!);
-		services.AddSingleton<IEmail>(EmailTestService);
+		services.AddSingleton<IEmailSender>(EmailSenderTestService);
 	}
 
 	private static void DbConfiguration(IServiceCollection services)
@@ -60,33 +60,19 @@ public class MyWebApplicationFactory : WebApplicationFactory<Program>
 	}
 }
 
-public class EmailTestService : IEmail
+public class EmailSenderTestService : IEmailSender
 {
 	public bool SendRegisterConfirmationIsDelivered { get; set; }
-	public Task<bool> SendRegisterConfirmation(string email, string name, string link)
+	public Task<bool> SendRegisterConfirmation(ApplicationUser user, string link)
 	{
 		SendRegisterConfirmationIsDelivered = true;
 		return Task.FromResult(true);
 	}
 
 	public bool SendReservationCreatedIsDelivered { get; set; }
-	public Task<bool> SendReservationCreated(string email, string name, Reservation reservation)
+	public Task<bool> SendReservationCreated(ApplicationUser user, Reservation reservation)
 	{
 		SendReservationCreatedIsDelivered = true;
-		return Task.FromResult(true);
-	}
-
-	public bool SendReservationDeletedIsDelivered { get; set; }
-	public Task<bool> SendReservationDeleted(string email, string name, Reservation reservation)
-	{
-		SendReservationDeletedIsDelivered = true;
-		return Task.FromResult(true);
-	}
-
-	public bool SendReservationDeletedByAdminIsDelivered { get; set; }
-	public Task<bool> SendReservationDeletedByAdmin(string email, string name, Reservation reservation, string reason)
-	{
-		SendReservationDeletedByAdminIsDelivered = true;
 		return Task.FromResult(true);
 	}
 }

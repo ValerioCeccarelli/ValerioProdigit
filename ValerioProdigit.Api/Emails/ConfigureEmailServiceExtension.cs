@@ -8,6 +8,6 @@ public static class ConfigureEmailServiceExtension
     {
         var settings = builder.Configuration.GetSection("Settings:SendGridSettings").Get<SendGridSettings>();
         var service = new SendGridEmailService(settings.Token, settings.ServiceEmail, settings.ServiceName);
-        builder.Services.AddSingleton<IEmail>(service);
+        builder.Services.AddSingleton<IEmailSender>(service);
     }
 }

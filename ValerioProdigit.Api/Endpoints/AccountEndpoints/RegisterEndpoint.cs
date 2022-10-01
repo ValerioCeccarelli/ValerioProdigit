@@ -28,7 +28,7 @@ public class RegisterEndpoint : IEndpointsMapper
         UserManager<ApplicationUser> userManager,
         IValidator<RegisterRequest> validator,
         EmailSettings emailSettings,
-        IEmail emailSender,
+        IEmailSender emailSender,
         IHashids hashids,
         HttpContext httpContext)
     {
@@ -69,7 +69,7 @@ public class RegisterEndpoint : IEndpointsMapper
         var link = $"{httpContext.Request.Scheme}://{httpContext.Request.Host}/Account/RegisterConfirmation?userId={userId}&token={encodedConfirmationToken}";
 
         var isEmailDelivered = await emailSender
-            .SendRegisterConfirmation(user.Email, $"{user.Name} {user.Surname}", link);
+            .SendRegisterConfirmation(user, link);
 
         if (!isEmailDelivered)
         {

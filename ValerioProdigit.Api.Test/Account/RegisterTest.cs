@@ -40,10 +40,10 @@ public class RegisterTest : IClassFixture<MyWebApplicationFactory>
 		response.StatusCode.Should().Be(HttpStatusCode.OK);
 		var registerResponse = await response.Content.ReadFromJsonAsync<RegisterResponse>();
 		registerResponse.Should().NotBeNull();
-		_factory.EmailTestService.SendRegisterConfirmationIsDelivered.Should().BeTrue();
+		_factory.EmailSenderTestService.SendRegisterConfirmationIsDelivered.Should().BeTrue();
 		
 		//reset email service
-		_factory.EmailTestService.SendRegisterConfirmationIsDelivered = false;
+		_factory.EmailSenderTestService.SendRegisterConfirmationIsDelivered = false;
 	}
 
 	[Fact]
@@ -77,9 +77,9 @@ public class RegisterTest : IClassFixture<MyWebApplicationFactory>
 		var registerResponse = await response.Content.ReadFromJsonAsync<RegisterResponse>();
 		registerResponse.Should().NotBeNull();
 		registerResponse!.Error.Should().NotBeNullOrWhiteSpace();
-		_factory.EmailTestService.SendRegisterConfirmationIsDelivered.Should().BeFalse();
+		_factory.EmailSenderTestService.SendRegisterConfirmationIsDelivered.Should().BeFalse();
 		
 		//reset email service
-		_factory.EmailTestService.SendRegisterConfirmationIsDelivered = false;
+		_factory.EmailSenderTestService.SendRegisterConfirmationIsDelivered = false;
 	}
 }

@@ -1,6 +1,5 @@
 using System.Net;
 using Microsoft.AspNetCore.Identity;
-using ValerioProdigit.Api.Auth.Services;
 using ValerioProdigit.Api.Configurations;
 using ValerioProdigit.Api.Dtos.Account;
 using ValerioProdigit.Api.Models;

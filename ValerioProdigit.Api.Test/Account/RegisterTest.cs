@@ -40,7 +40,10 @@ public class RegisterTest : IClassFixture<MyWebApplicationFactory>
 		response.StatusCode.Should().Be(HttpStatusCode.OK);
 		var registerResponse = await response.Content.ReadFromJsonAsync<RegisterResponse>();
 		registerResponse.Should().NotBeNull();
-		registerResponse!.Token.Should().NotBeNullOrWhiteSpace();
+		_factory.EmailSenderTestService.SendRegisterConfirmationIsDelivered.Should().BeTrue();
+		
+		//reset email service
+		_factory.EmailSenderTestService.SendRegisterConfirmationIsDelivered = false;
 	}
 
 	[Fact]
@@ -74,5 +77,9 @@ public class RegisterTest : IClassFixture<MyWebApplicationFactory>
 		var registerResponse = await response.Content.ReadFromJsonAsync<RegisterResponse>();
 		registerResponse.Should().NotBeNull();
 		registerResponse!.Error.Should().NotBeNullOrWhiteSpace();
+		_factory.EmailSenderTestService.SendRegisterConfirmationIsDelivered.Should().BeFalse();
+		
+		//reset email service
+		_factory.EmailSenderTestService.SendRegisterConfirmationIsDelivered = false;
 	}
 }

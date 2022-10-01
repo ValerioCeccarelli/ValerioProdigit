@@ -54,10 +54,16 @@ public class LoginEndpoints : IEndpointsMapper
                 Error = "Invalid password"
             }); 
         }
-        
-        
 
-        var token = await jwtGenerator.Generate(user);
+        if (!user.EmailConfirmed)
+        {
+            return Results.BadRequest(new LoginResponse()
+            {
+                Error = "Email not confirmed"
+            }); 
+        }
+
+        var token = await jwtGenerator.GenerateAsync(user);
 		
         return Results.Ok(new LoginResponse()
         {

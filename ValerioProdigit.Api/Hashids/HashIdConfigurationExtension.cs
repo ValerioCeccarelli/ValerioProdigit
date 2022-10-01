@@ -11,6 +11,6 @@ public static class HashIdConfigurationExtension
 			.GetSection("Settings:HashidSettings")
 			.Get<HashidSettings>();
 		
-		builder.Services.AddSingleton<IHashids>(_ => new HashidsNet.Hashids(hashId.Salt, hashId.MinLength));
+		builder.Services.AddSingleton<IHashids>(_ => new HashidsNet.Hashids(hashId.Salt, hashId.MinHashLength));
 	}
 }

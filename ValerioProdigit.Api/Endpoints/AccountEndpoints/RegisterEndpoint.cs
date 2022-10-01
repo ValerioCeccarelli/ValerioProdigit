@@ -1,12 +1,14 @@
 using System.Net;
+using System.Web;
+using HashidsNet;
 using Microsoft.AspNetCore.Identity;
-using ValerioProdigit.Api.Auth.Services;
 using ValerioProdigit.Api.Configurations;
 using ValerioProdigit.Api.Dtos.Account;
 using ValerioProdigit.Api.Models;
 using ValerioProdigit.Api.Swagger;
 using ValerioProdigit.Api.Validators;
 using ValerioProdigit.Api.Auth;
+using ValerioProdigit.Api.Emails;
 
 namespace ValerioProdigit.Api.Endpoints.AccountEndpoints;
 
@@ -26,7 +28,9 @@ public class RegisterEndpoint : IEndpointsMapper
         UserManager<ApplicationUser> userManager,
         IValidator<RegisterRequest> validator,
         EmailSettings emailSettings,
-        JwtGenerator jwtGenerator)
+        IEmailSender emailSender,
+        IHashids hashids,
+        HttpContext httpContext)
     {
         var validationResult = validator.Validate(registerRequest);
         if (!validationResult.Succeeded)
@@ -57,12 +61,25 @@ public class RegisterEndpoint : IEndpointsMapper
         var role = ChooseRole(user.Email, emailSettings);
         await userManager.AddToRoleAsync(user, role);
 
-        var token = await jwtGenerator.Generate(user);
+        var confirmationToken = await userManager.GenerateEmailConfirmationTokenAsync(user);
+        var encodedConfirmationToken = HttpUtility.UrlEncode(confirmationToken);
+        var userId = hashids.Encode(user.Id);
+        Console.WriteLine(userId);
+        Console.WriteLine(confirmationToken);
+        var link = $"{httpContext.Request.Scheme}://{httpContext.Request.Host}/Account/RegisterConfirmation?userId={userId}&token={encodedConfirmationToken}";
 
-        return Results.Ok(new RegisterResponse()
+        var isEmailDelivered = await emailSender
+            .SendRegisterConfirmation(user, link);
+
+        if (!isEmailDelivered)
         {
-            Token = token
-        });
+            return Results.BadRequest(new RegisterResponse()
+            {
+                Error = "Some errors occurs"
+            });
+        }
+        
+        return Results.Ok(new RegisterResponse());
     }
     
     private static string ChooseRole(string email, EmailSettings emailSettings)
@@ -72,7 +89,7 @@ public class RegisterEndpoint : IEndpointsMapper
         {
             return Role.Admin;
         }
-        else if (emailSettings.AllowedTeacherDomains.Contains(domain))
+        if (emailSettings.AllowedTeacherDomains.Contains(domain))
         {
             return Role.Teacher;
         }

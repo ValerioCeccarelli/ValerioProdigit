@@ -3,5 +3,5 @@
 public class HashidSettings
 {
 	public string Salt { get; set; } = default!;
-	public int MinLength { get; set; }
+	public int MinHashLength { get; set; }
 }

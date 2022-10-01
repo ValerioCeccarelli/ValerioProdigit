@@ -4,12 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using ValerioProdigit.Api.Auth;
 using ValerioProdigit.Api.Data;
 using ValerioProdigit.Api.Dtos.Reservation;
-using ValerioProdigit.Api.Emails;
 using ValerioProdigit.Api.Swagger;
 
 namespace ValerioProdigit.Api.Endpoints.ReservationEndpoints;
 
-public class DeleteEndpoint : IEndpointsMapper
+public sealed class DeleteEndpoint : IEndpointsMapper
 {
 	public void MapEndpoints(WebApplication app)
 	{

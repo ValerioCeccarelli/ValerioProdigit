@@ -1,6 +1,6 @@
 namespace ValerioProdigit.Api.Dtos.Account;
 
-public class RegisterRequest
+public sealed class RegisterRequest
 {
     public string Name { get; set; } = default!;
     public string Surname { get; set; } = default!;

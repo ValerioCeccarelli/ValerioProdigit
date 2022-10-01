@@ -3,7 +3,7 @@ using ValerioProdigit.Api.Validators.Building;
 
 namespace ValerioProdigit.Api.Validators.Classroom;
 
-public class AddClassroomRequestValidator : IValidator<AddClassroomRequest>
+public sealed class AddClassroomRequestValidator : IValidator<AddClassroomRequest>
 {
     private readonly BuildingValidatorSettings _buildingValidatorSettings;
     private readonly ClassroomValidatorSettings _classroomValidatorSettings;

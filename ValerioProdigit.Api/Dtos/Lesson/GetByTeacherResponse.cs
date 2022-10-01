@@ -1,6 +1,6 @@
 ﻿namespace ValerioProdigit.Api.Dtos.Lesson;
 
-public class GetByTeacherResponse
+public sealed class GetByTeacherResponse
 {
 	public bool Success => Error.Length == 0;
 	public string Error { get; set; } = "";

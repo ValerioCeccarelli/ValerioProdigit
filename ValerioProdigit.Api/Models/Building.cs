@@ -2,7 +2,7 @@
 
 namespace ValerioProdigit.Api.Models;
 
-public class Building
+public sealed class Building
 {
 	[Key]
 	public int Id { get; set; }

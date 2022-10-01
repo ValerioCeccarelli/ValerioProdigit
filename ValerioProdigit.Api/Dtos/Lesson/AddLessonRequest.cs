@@ -1,6 +1,6 @@
 ﻿namespace ValerioProdigit.Api.Dtos.Lesson;
 
-public class AddLessonRequest
+public sealed class AddLessonRequest
 {
 	public string BuildingCode { get; set; } = "";
 	public string ClassroomCode { get; set; } = "";

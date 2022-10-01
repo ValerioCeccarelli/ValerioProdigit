@@ -10,7 +10,7 @@ using ValerioProdigit.Api.Swagger;
 
 namespace ValerioProdigit.Api.Endpoints.ReservationEndpoints;
 
-public class AddEndpoint : IEndpointsMapper
+public sealed class AddEndpoint : IEndpointsMapper
 {
 	public void MapEndpoints(WebApplication app)
 	{

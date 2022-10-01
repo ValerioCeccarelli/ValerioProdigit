@@ -2,7 +2,7 @@
 
 namespace ValerioProdigit.Api.Validators.Lesson;
 
-public class LessonValidatorSettings
+public sealed class LessonValidatorSettings
 {
 	public readonly Regex DateRegex = new(@"^\d\d\d\d-\d\d-\d\d", RegexOptions.Compiled);
 	

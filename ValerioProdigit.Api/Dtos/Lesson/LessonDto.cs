@@ -1,6 +1,6 @@
 ﻿namespace ValerioProdigit.Api.Dtos.Lesson;
 
-public class LessonDto
+public sealed class LessonDto
 {
 	public string Name { get; set; } = default!;
 	public string Description { get; set; } = default!;

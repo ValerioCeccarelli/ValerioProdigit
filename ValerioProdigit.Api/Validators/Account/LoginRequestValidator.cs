@@ -3,7 +3,7 @@ using ValerioProdigit.Api.Dtos.Account;
 
 namespace ValerioProdigit.Api.Validators.Account;
 
-public class LoginRequestValidator : IValidator<LoginRequest>
+public sealed class LoginRequestValidator : IValidator<LoginRequest>
 {
     private readonly EmailSettings _emailSettings;
     private readonly AccountValidatorSettings _accountValidatorSettings;

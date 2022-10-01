@@ -8,7 +8,7 @@ using ValerioProdigit.Api.Swagger;
 
 namespace ValerioProdigit.Api.Endpoints.LessonEndpoints;
 
-public class DeleteEndpoint : IEndpointsMapper
+public sealed class DeleteEndpoint : IEndpointsMapper
 {
 	public void MapEndpoints(WebApplication app)
 	{

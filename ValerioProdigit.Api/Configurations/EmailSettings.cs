@@ -2,7 +2,7 @@ using System.Text.RegularExpressions;
 
 namespace ValerioProdigit.Api.Configurations;
 
-public class EmailSettings
+public sealed class EmailSettings
 {
     public readonly Regex EmailRegex = new(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
     public HashSet<string> AllowedStudentsDomains { get; set; } = default!;

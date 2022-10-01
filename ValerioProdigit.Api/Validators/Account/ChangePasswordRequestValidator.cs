@@ -2,7 +2,7 @@ using ValerioProdigit.Api.Dtos.Account;
 
 namespace ValerioProdigit.Api.Validators.Account;
 
-public class ChangePasswordRequestValidator : IValidator<ChangePasswordRequest>
+public sealed class ChangePasswordRequestValidator : IValidator<ChangePasswordRequest>
 {
     public ValidationResult Validate(ChangePasswordRequest obj)
     {

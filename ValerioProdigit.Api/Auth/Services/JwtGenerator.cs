@@ -8,7 +8,7 @@ using ValerioProdigit.Api.Models;
 
 namespace ValerioProdigit.Api.Auth.Services;
 
-public class JwtGenerator
+public sealed class JwtGenerator
 {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly JwtSettings _jwtSettings;

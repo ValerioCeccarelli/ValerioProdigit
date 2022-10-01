@@ -12,7 +12,7 @@ using ValerioProdigit.Api.Validators;
 
 namespace ValerioProdigit.Api.Endpoints.ClassroomEndpoints;
 
-public class AddEndpoint : IEndpointsMapper
+public sealed class AddEndpoint : IEndpointsMapper
 {
     public void MapEndpoints(WebApplication app)
     {

@@ -1,6 +1,6 @@
 ﻿namespace ValerioProdigit.Api.Dtos.Lesson;
 
-public class GetByClassroomRequest
+public sealed class GetByClassroomRequest
 {
 	public string Date { get; set; } = "";
 	public string ClassroomCode { get; set; } = "";

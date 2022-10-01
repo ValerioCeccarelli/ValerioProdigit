@@ -3,7 +3,7 @@ using ValerioProdigit.Api.Dtos.Account;
 
 namespace ValerioProdigit.Api.Swagger.ExampleProviders.AccountExamples;
 
-public class LoginRequestExample : IExamplesProvider<LoginRequest>
+public sealed class LoginRequestExample : IExamplesProvider<LoginRequest>
 {
     public LoginRequest GetExamples()
     {

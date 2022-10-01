@@ -4,7 +4,7 @@ using ValerioProdigit.Api.Validators.Classroom;
 
 namespace ValerioProdigit.Api.Validators.Lesson;
 
-public class GetByClassroomRequestValidator : IValidator<GetByClassroomRequest>
+public sealed class GetByClassroomRequestValidator : IValidator<GetByClassroomRequest>
 {
 	private readonly BuildingValidatorSettings _buildingValidatorSettings;
 	private readonly ClassroomValidatorSettings _classroomValidatorSettings;

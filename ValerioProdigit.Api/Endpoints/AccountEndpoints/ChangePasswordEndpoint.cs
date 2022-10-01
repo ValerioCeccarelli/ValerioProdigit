@@ -8,7 +8,7 @@ using ValerioProdigit.Api.Validators;
 
 namespace ValerioProdigit.Api.Endpoints.AccountEndpoints;
 
-public class ChangePasswordEndpoint : IEndpointsMapper
+public sealed class ChangePasswordEndpoint : IEndpointsMapper
 {
     public void MapEndpoints(WebApplication app)
     {

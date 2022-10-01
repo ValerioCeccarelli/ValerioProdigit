@@ -4,7 +4,7 @@ using ValerioProdigit.Api.Models;
 
 namespace ValerioProdigit.Api.Emails;
 
-public class SendGridEmailService : IEmailSender
+public sealed class SendGridEmailService : IEmailSender
 {
     private readonly SendGridClient _client;
     private readonly EmailAddress _from;

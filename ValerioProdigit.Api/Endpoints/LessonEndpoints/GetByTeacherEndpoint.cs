@@ -11,7 +11,7 @@ using ValerioProdigit.Api.Validators;
 
 namespace ValerioProdigit.Api.Endpoints.LessonEndpoints;
 
-public class GetByTeacherEndpoint : IEndpointsMapper
+public sealed class GetByTeacherEndpoint : IEndpointsMapper
 {
 	public void MapEndpoints(WebApplication app)
 	{

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ValerioProdigit.Api.Models;
 
-public class Row
+public sealed class Row
 {
 	[Key]
 	public int Id { get; set; }

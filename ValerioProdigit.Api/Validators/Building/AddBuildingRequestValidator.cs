@@ -2,7 +2,7 @@ using ValerioProdigit.Api.Dtos.Building;
 
 namespace ValerioProdigit.Api.Validators.Building;
 
-public class AddBuildingRequestValidator : IValidator<AddBuildingRequest>
+public sealed class AddBuildingRequestValidator : IValidator<AddBuildingRequest>
 {
     private readonly BuildingValidatorSettings _buildingSettings;
 

@@ -1,6 +1,6 @@
 ﻿namespace ValerioProdigit.Api.Configurations;
 
-public class JwtSettings
+public sealed class JwtSettings
 {
 	public string Secret { get; set; } = null!;
 	public TimeSpan ExpiryTime { get; set; }

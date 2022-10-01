@@ -2,7 +2,7 @@
 
 namespace ValerioProdigit.Api.Models;
 
-public class ApplicationUser : IdentityUser<int>
+public sealed class ApplicationUser : IdentityUser<int>
 {
 	public string Surname { get; set; } = null!;
 	public string Name { get; set; } = null!;

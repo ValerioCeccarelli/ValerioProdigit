@@ -2,7 +2,7 @@
 
 namespace ValerioProdigit.Api.Models;
 
-public class ApplicationRole : IdentityRole<int>
+public sealed class ApplicationRole : IdentityRole<int>
 {
 	
 }

@@ -12,7 +12,7 @@ using ValerioProdigit.Api.Emails;
 
 namespace ValerioProdigit.Api.Endpoints.AccountEndpoints;
 
-public class RegisterEndpoint : IEndpointsMapper
+public sealed class RegisterEndpoint : IEndpointsMapper
 {
     public void MapEndpoints(WebApplication app)
     {

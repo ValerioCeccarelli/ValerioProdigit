@@ -1,6 +1,6 @@
 ﻿namespace ValerioProdigit.Api.Dtos.Reservation;
 
-public class GetMyReservationResponse
+public sealed class GetMyReservationResponse
 {
 	public bool Success => Error.Length == 0;
 	public string Error { get; set; } = "";

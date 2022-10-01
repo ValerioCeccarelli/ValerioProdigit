@@ -6,7 +6,7 @@ using ValerioProdigit.Api.Models;
 
 namespace ValerioProdigit.Api.Endpoints.AccountEndpoints;
 
-public class RegisterConfirmationEndpoint : IEndpointsMapper
+public sealed class RegisterConfirmationEndpoint : IEndpointsMapper
 {
     public void MapEndpoints(WebApplication app)
     {

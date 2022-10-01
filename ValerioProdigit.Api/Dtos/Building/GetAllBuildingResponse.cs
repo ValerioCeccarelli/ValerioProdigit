@@ -1,7 +1,7 @@
 
 namespace ValerioProdigit.Api.Dtos.Building;
 
-public class GetAllBuildingResponse
+public sealed class GetAllBuildingResponse
 {
     public bool Success => Error.Length == 0;
     public string Error { get; set; } = "";

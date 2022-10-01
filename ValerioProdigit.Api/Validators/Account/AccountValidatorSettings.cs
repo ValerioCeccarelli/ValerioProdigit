@@ -2,7 +2,7 @@
 
 namespace ValerioProdigit.Api.Validators.Account;
 
-public class AccountValidatorSettings
+public sealed class AccountValidatorSettings
 {
 	public readonly Regex NameRegex = new(@"^[a-z]+( [a-z])*$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 

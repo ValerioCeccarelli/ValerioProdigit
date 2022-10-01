@@ -6,7 +6,7 @@ using ValerioProdigit.Api.Swagger;
 
 namespace ValerioProdigit.Api.Endpoints.BuildingEndpoints;
 
-public class GetAllEndpoint : IEndpointsMapper
+public sealed class GetAllEndpoint : IEndpointsMapper
 {
     public void MapEndpoints(WebApplication app)
     {

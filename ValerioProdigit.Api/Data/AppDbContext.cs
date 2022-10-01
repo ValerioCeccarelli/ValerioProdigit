@@ -4,7 +4,7 @@ using ValerioProdigit.Api.Models;
 
 namespace ValerioProdigit.Api.Data;
 
-public class AppDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int>
+public sealed class AppDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int>
 {
     public DbSet<Reservation> Reservations { get; set; } = null!;
     public DbSet<Classroom> Classrooms { get; set; } = null!;

@@ -3,7 +3,7 @@ using ValerioProdigit.Api.Dtos.Classroom;
 
 namespace ValerioProdigit.Api.Swagger.ExampleProviders.ClassroomExamples;
 
-public class AddClassroomRequestExample : IExamplesProvider<AddClassroomRequest>
+public sealed class AddClassroomRequestExample : IExamplesProvider<AddClassroomRequest>
 {
 	public AddClassroomRequest GetExamples()
 	{

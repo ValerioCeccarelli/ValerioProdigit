@@ -10,7 +10,7 @@ using ValerioProdigit.Api.Validators;
 
 namespace ValerioProdigit.Api.Endpoints.AccountEndpoints;
 
-public class ResendConfirmationEmailEndpoint : IEndpointsMapper
+public sealed class ResendConfirmationEmailEndpoint : IEndpointsMapper
 {
 	public void MapEndpoints(WebApplication app)
 	{

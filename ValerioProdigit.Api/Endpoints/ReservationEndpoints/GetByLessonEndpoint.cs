@@ -10,7 +10,7 @@ using ValerioProdigit.Api.Swagger;
 
 namespace ValerioProdigit.Api.Endpoints.ReservationEndpoints;
 
-public class GetByLessonEndpoint : IEndpointsMapper
+public sealed class GetByLessonEndpoint : IEndpointsMapper
 {
 	public void MapEndpoints(WebApplication app)
 	{

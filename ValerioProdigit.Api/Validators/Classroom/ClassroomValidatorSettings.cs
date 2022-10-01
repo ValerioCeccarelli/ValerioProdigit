@@ -2,7 +2,7 @@
 
 namespace ValerioProdigit.Api.Validators.Classroom;
 
-public class ClassroomValidatorSettings
+public sealed class ClassroomValidatorSettings
 {
 	public readonly Regex CodeRegex = new(@"^[a-z0-9]+$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 	

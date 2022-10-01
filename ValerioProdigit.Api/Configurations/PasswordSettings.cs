@@ -1,6 +1,6 @@
 namespace ValerioProdigit.Api.Configurations;
 
-public class PasswordSettings
+public sealed class PasswordSettings
 {
     public bool RequireDigit { get; set; } = true;
     public int RequiredLength { get; set; } = 6;

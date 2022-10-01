@@ -3,7 +3,7 @@ using ValerioProdigit.Api.Dtos.Building;
 
 namespace ValerioProdigit.Api.Swagger.ExampleProviders.BuildingExamples;
 
-public class AddBuildingRequestExample : IExamplesProvider<AddBuildingRequest>
+public sealed class AddBuildingRequestExample : IExamplesProvider<AddBuildingRequest>
 {
 	public AddBuildingRequest GetExamples()
 	{

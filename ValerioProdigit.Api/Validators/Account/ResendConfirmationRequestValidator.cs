@@ -3,7 +3,7 @@ using ValerioProdigit.Api.Dtos.Account;
 
 namespace ValerioProdigit.Api.Validators.Account;
 
-public class ResendConfirmationRequestValidator : IValidator<ResendConfirmationRequest>
+public sealed class ResendConfirmationRequestValidator : IValidator<ResendConfirmationRequest>
 {
 	private readonly EmailSettings _emailSettings;
     private readonly AccountValidatorSettings _accountValidatorSettings;

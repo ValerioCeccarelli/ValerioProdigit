@@ -9,7 +9,7 @@ using ValerioProdigit.Api.Validators;
 
 namespace ValerioProdigit.Api.Endpoints.AccountEndpoints;
 
-public class LoginEndpoints : IEndpointsMapper
+public sealed class LoginEndpoints : IEndpointsMapper
 {
     public void MapEndpoints(WebApplication app)
     {

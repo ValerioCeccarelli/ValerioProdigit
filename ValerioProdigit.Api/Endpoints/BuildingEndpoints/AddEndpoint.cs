@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using ValerioProdigit.Api.Auth;
 using ValerioProdigit.Api.Data;
 using ValerioProdigit.Api.Dtos.Building;
+using ValerioProdigit.Api.Logs;
 using ValerioProdigit.Api.Models;
 using ValerioProdigit.Api.Swagger;
 using ValerioProdigit.Api.Validators;
@@ -30,7 +31,8 @@ public class AddEndpoint : IEndpointsMapper
         IValidator<AddBuildingRequest> validator,
         AppDbContext dbContext,
         IHashids hashids,
-        HttpContext httpContext)
+        HttpContext httpContext,
+        ILogger<AddEndpoint> logger)
     {
         var validationResult = validator.Validate(request);
         if (!validationResult.Succeeded)
@@ -68,6 +70,9 @@ public class AddEndpoint : IEndpointsMapper
                 Error = "Some error occurred"
             });
         }
+        
+        logger.LogBuildingCreated(building);
+        
         var path = httpContext.Request.Scheme + "://" + httpContext.Request.Host + "/Building/Get/" + hashids.Encode(building.Id);
         return Results.Created(path, new AddBuildingResponse());
     }

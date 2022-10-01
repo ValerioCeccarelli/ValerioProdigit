@@ -1,6 +1,7 @@
 using HashidsNet;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using ValerioProdigit.Api.Logs;
 using ValerioProdigit.Api.Models;
 
 namespace ValerioProdigit.Api.Endpoints.AccountEndpoints;
@@ -17,7 +18,8 @@ public class RegisterConfirmationEndpoint : IEndpointsMapper
         [FromQuery] string userId,
         [FromQuery] string token,
         UserManager<ApplicationUser> userManager,
-        IHashids hashids)
+        IHashids hashids,
+        ILogger<RegisterConfirmationEndpoint> logger)
     {
         if (!hashids.TryDecodeSingle(userId, out var id))
         {
@@ -42,6 +44,8 @@ public class RegisterConfirmationEndpoint : IEndpointsMapper
         {
             return Results.BadRequest("Something went wrong");
         }
+
+        logger.LogUserCreated(user.Email);
 
         return Results.Ok("Account confirmed");
     }

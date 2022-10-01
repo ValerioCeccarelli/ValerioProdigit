@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using ValerioProdigit.Api.Auth;
 using ValerioProdigit.Api.Data;
 using ValerioProdigit.Api.Dtos.Classroom;
+using ValerioProdigit.Api.Logs;
 using ValerioProdigit.Api.Swagger;
 
 namespace ValerioProdigit.Api.Endpoints.ClassroomEndpoints;
@@ -26,7 +27,8 @@ public class DeleteEndpoint : IEndpointsMapper
     private static async Task<IResult> Delete(
         string classroomId, 
         AppDbContext context,
-        IHashids hashids)
+        IHashids hashids,
+        ILogger<DeleteEndpoint> logger)
     {
         if (!hashids.TryDecodeSingle(classroomId, out var id))
         {
@@ -59,6 +61,8 @@ public class DeleteEndpoint : IEndpointsMapper
                 Error = "Some error occurred"
             });
         }
+        
+        logger.LogClassroomDeleted(classroom);
         
         return Results.Ok(new DeleteClassroomResponse());
     }

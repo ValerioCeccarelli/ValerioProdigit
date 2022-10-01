@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using ValerioProdigit.Api.Auth;
 using ValerioProdigit.Api.Data;
 using ValerioProdigit.Api.Dtos.Classroom;
+using ValerioProdigit.Api.Logs;
 using ValerioProdigit.Api.Models;
 using ValerioProdigit.Api.Swagger;
 using ValerioProdigit.Api.Validators;
@@ -31,7 +32,8 @@ public class AddEndpoint : IEndpointsMapper
         AppDbContext context, 
         IValidator<AddClassroomRequest> validator,
         IHashids hashids,
-        HttpContext httpContext)
+        HttpContext httpContext,
+        ILogger<AddEndpoint> logger)
     {
         var validationResult = validator.Validate(request);
         if (!validationResult.Succeeded)
@@ -86,6 +88,8 @@ public class AddEndpoint : IEndpointsMapper
                 Error = "Some error occurred"
             });
         }
+        
+        logger.LogClassroomCreated(classroom);
 
         var path = httpContext.Request.Scheme + "://" + httpContext.Request.Host + "/Classroom/Get/" + hashids.Encode(classroom.Id);
         return Results.Created(path, new AddClassroomResponse());

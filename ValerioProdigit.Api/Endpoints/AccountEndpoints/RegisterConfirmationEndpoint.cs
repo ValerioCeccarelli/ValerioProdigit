@@ -9,7 +9,7 @@ public class RegisterConfirmationEndpoint : IEndpointsMapper
 {
     public void MapEndpoints(WebApplication app)
     {
-        app.MapPost("Account/RegisterConfirmation", RegisterConfirmation)
+        app.MapGet("Account/RegisterConfirmation", RegisterConfirmation)
             .WithTags("Account");
     }
 

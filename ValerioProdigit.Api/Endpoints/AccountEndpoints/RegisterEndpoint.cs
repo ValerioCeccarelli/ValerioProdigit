@@ -8,7 +8,6 @@ using ValerioProdigit.Api.Models;
 using ValerioProdigit.Api.Swagger;
 using ValerioProdigit.Api.Validators;
 using ValerioProdigit.Api.Auth;
-using ValerioProdigit.Api.Auth.Services;
 using ValerioProdigit.Api.Emails;
 
 namespace ValerioProdigit.Api.Endpoints.AccountEndpoints;
@@ -65,6 +64,8 @@ public class RegisterEndpoint : IEndpointsMapper
         var confirmationToken = await userManager.GenerateEmailConfirmationTokenAsync(user);
         var encodedConfirmationToken = HttpUtility.UrlEncode(confirmationToken);
         var userId = hashids.Encode(user.Id);
+        Console.WriteLine(userId);
+        Console.WriteLine(confirmationToken);
         var link = $"{httpContext.Request.Scheme}://{httpContext.Request.Host}/Account/RegisterConfirmation?userId={userId}&token={encodedConfirmationToken}";
 
         var isEmailDelivered = await emailSender

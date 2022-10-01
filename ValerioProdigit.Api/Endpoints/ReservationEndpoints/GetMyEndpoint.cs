@@ -1,11 +1,9 @@
 ﻿using System.Net;
 using HashidsNet;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ValerioProdigit.Api.Data;
 using ValerioProdigit.Api.Dtos.Reservation;
 using ValerioProdigit.Api.Swagger;
-using ValerioProdigit.Api.Validators;
 
 namespace ValerioProdigit.Api.Endpoints.ReservationEndpoints;
 
@@ -23,21 +21,10 @@ public class GetMyEndpoint : IEndpointsMapper
 	}
 
 	private static async Task<IResult> GetMyAsync(
-		[FromBody] GetMyReservationRequest request,
 		AppDbContext context,
-		IValidator<GetMyReservationRequest> validator,
 		HttpContext httpContext,
 		IHashids hashids)
 	{
-		var validationResult = validator.Validate(request);
-		if (!validationResult.Succeeded)
-		{
-			return Results.BadRequest(new GetMyReservationResponse()
-			{
-				Error = validationResult.Error
-			});
-		}
-		
 		var userId = httpContext.User.FindFirst("Id")!.Value;
 		var reservations = await context.Reservations
 			.Include(r => r.Lesson)
@@ -45,7 +32,7 @@ public class GetMyEndpoint : IEndpointsMapper
 			.ThenInclude(c => c.Building)
 			.Include(r => r.Lesson.Teacher)
 			.Where(r => r.StudentId == int.Parse(userId))
-			.Where(r => r.Lesson.Date == request.Date)
+			.Where(r => r.Lesson.Date >= DateTime.Now)
 			.ToListAsync();
 
 		return Results.Ok(new GetMyReservationResponse()
@@ -63,7 +50,7 @@ public class GetMyEndpoint : IEndpointsMapper
 				Row = x.Row,
 				Seat = x.Seat,
 				
-				Date = x.Lesson.Date,
+				Date = x.Lesson.Date.ToString("yyyy-MM-dd"),
 				StartHour = x.Lesson.StartHour,
 				FinishHour = x.Lesson.FinishHour,
 				

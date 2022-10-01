@@ -8,7 +8,7 @@ public class Lesson
 	[Key]
 	public int Id { get; set; }
 
-	public string Date { get; set; } = default!;
+	public DateTime Date { get; set; }
 	public int StartHour { get; set; }
 	public int FinishHour { get; set; }
 	

@@ -62,7 +62,7 @@ public class GetByClassroomEndpoint : IEndpointsMapper
 		var lessons = await context.Lessons
 			.AsNoTracking()
 			.Where(x => x.ClassroomId == classroom.Id)
-			.Where(x => x.Date == request.Date)
+			.Where(x => x.Date == DateTime.Parse(request.Date))
 			.Include(x => x.Teacher)
 			.ToListAsync();
 
@@ -73,7 +73,7 @@ public class GetByClassroomEndpoint : IEndpointsMapper
 				BuildingCode = building.Code,
 				ClassroomCode = classroom.Code,
 				
-				Date = x.Date,
+				Date = x.Date.ToString("yyyy-MM-dd"),
 				StartHour = x.StartHour,
 				FinishHour = x.FinishHour,
 				

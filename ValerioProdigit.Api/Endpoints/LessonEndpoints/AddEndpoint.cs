@@ -65,15 +65,16 @@ public class AddEndpoint : IEndpointsMapper
 			});
 		}
 
+		var date = DateTime.Parse(request.Date);
 		var lessons = await context.Lessons
 			.AsNoTracking()
 			.Where(x => x.ClassroomId == classroom.Id)
-			.Where(x => x.Date == request.Date)
+			.Where(x => x.Date == date)
 			.ToListAsync();
 
 		var newLesson = new Lesson()
 		{
-			Date = request.Date,
+			Date = date,
 			StartHour = request.StartHour,
 			FinishHour = request.FinishHour,
 			

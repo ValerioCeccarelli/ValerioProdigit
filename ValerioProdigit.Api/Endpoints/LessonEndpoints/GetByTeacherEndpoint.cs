@@ -64,7 +64,7 @@ public class GetByTeacherEndpoint : IEndpointsMapper
 				BuildingCode = x.Classroom.Code,
 				ClassroomCode = x.Classroom.Building.Code,
 				
-				Date = x.Date,
+				Date = x.Date.ToString("yyyy-MM-dd"),
 				StartHour = x.StartHour,
 				FinishHour = x.FinishHour,
 				

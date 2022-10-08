@@ -2,6 +2,7 @@ using System.Net;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Annotations;
 using Swashbuckle.AspNetCore.Filters;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace ValerioProdigit.Api.Swagger;
 
@@ -9,8 +10,6 @@ public static class SwaggerConfigurationExtension
 {
     public static void ConfigureSwagger(this WebApplicationBuilder builder)
     {
-        var swaggerSection = builder.Configuration.GetSection("Swagger");
-
         var securityScheme = new OpenApiSecurityScheme()
         {
             Name = "Authorization",
@@ -36,33 +35,11 @@ public static class SwaggerConfigurationExtension
             }
         };
 
-        var contactInfo = new OpenApiContact()
-        {
-            Name = swaggerSection["Contact:Name"],
-            Email = swaggerSection["Contact:Email"],
-            Url = new Uri(swaggerSection["Contact:Url"])
-        };
-
-        var license = new OpenApiLicense()
-        {
-            Name = swaggerSection["License:Name"],
-            Url = new Uri(swaggerSection["License:Url"])
-        };
-
-        var info = new OpenApiInfo()
-        {
-            Version = swaggerSection["Info:Version"],
-            Title = swaggerSection["Info:Title"],
-            Description = swaggerSection["Info:Description"],
-            Contact = contactInfo,
-            License = license,
-        };
-		
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen(option =>
         {
             option.ExampleFilters();
-            option.SwaggerDoc(swaggerSection["Info:Version"].ToLower(), info);
+            option.AddSwaggerDoc(builder);
             option.AddSecurityDefinition("Bearer", securityScheme);
             option.AddSecurityRequirement(securityRequirement);
 
@@ -73,6 +50,51 @@ public static class SwaggerConfigurationExtension
         });
 
         builder.Services.AddSwaggerExamplesFromAssemblyOf<Program>();
+    }
+
+    private static void AddSwaggerDoc(this SwaggerGenOptions option, WebApplicationBuilder builder)
+    {
+        SwaggerSettings? swaggerSettings = builder.Configuration.GetSection("Swaggerz").Get<SwaggerSettings>();
+        
+        var contactInfo = new OpenApiContact()
+        {
+            Name = swaggerSettings.Contact.Name,
+            Email = swaggerSettings.Contact.Email,
+            Url = new Uri(swaggerSettings.Contact.Url)
+        };
+
+        var license = new OpenApiLicense()
+        {
+            Name = swaggerSettings.License.Name,
+            Url = new Uri(swaggerSettings.License.Url)
+        };
+
+        var info = new OpenApiInfo()
+        {
+            Version = swaggerSettings.Info.Version,
+            Title = swaggerSettings.Info.Title,
+            Description = swaggerSettings.Info.Description,
+            Contact = contactInfo,
+            License = license,
+        };
+
+        if (swaggerSettings is null)
+        {
+            using var scope = builder.Services.BuildServiceProvider().CreateScope();
+            var logger = scope.ServiceProvider.GetRequiredService<ILogger>();
+            logger.LogWarning("Swagger settings not found");
+            return;
+        }
+
+        if (!swaggerSettings.IsValid(out var error))
+        {
+            using var scope = builder.Services.BuildServiceProvider().CreateScope();
+            var logger = scope.ServiceProvider.GetRequiredService<ILogger>();
+            logger.LogWarning("Swagger settings not valid: {error}", error);
+            return;
+        }
+        
+        option.SwaggerDoc(swaggerSettings.Info.Version.ToLower(), info);
     }
 	
     public static void UseSwaggerEndpoint(this WebApplication app)

@@ -1,4 +1,5 @@
 using System.Net;
+using HashidsNet;
 using Microsoft.EntityFrameworkCore;
 using ValerioProdigit.Api.Data;
 using ValerioProdigit.Api.Dtos.Building;
@@ -16,7 +17,9 @@ public sealed class GetAllEndpoint : IEndpointsMapper
             .WithResponseDocumentation<GetAllBuildingResponse>(HttpStatusCode.OK, "List of Building");
     }
 
-    private static async Task<IResult> GetAll(AppDbContext dbContext)
+    private static async Task<IResult> GetAll(
+        AppDbContext dbContext,
+        IHashids hashids)
     {
         var buildings = await dbContext.Buildings.AsNoTracking().ToListAsync();
         return Results.Ok(new GetAllBuildingResponse()
@@ -25,7 +28,8 @@ public sealed class GetAllEndpoint : IEndpointsMapper
             {
                 Address = building.Address,
                 Code = building.Code,
-                Name = building.Name
+                Name = building.Name,
+                Id = hashids.Encode(building.Id)
             })
         });
     }

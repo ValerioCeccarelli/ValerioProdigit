@@ -39,6 +39,7 @@ public sealed class DeleteEndpoint : IEndpointsMapper
         }
 
         var classroom = await context.Classrooms
+            .Include(c => c.Building)
             .FirstOrDefaultAsync(x => x.Id == id);
         
         if (classroom is null)

@@ -19,13 +19,14 @@ public sealed class SendGridEmailService : IEmailSender
     
     public async Task<bool> SendRegisterConfirmation(ApplicationUser user, string link)
     {
-        var to = new EmailAddress(user.Email, $"{user.Name} {user.Surname}");
-        const string subject = "ValerioProdigit account confirmation";
-        var plainTextContent = $"To confirm your account use this link {link}";
-        var htmlContent = $"To confirm your account use this <a href=\"{link}\">link</a>";
-        var msg = MailHelper.CreateSingleEmail(_from, to, subject, plainTextContent, htmlContent);
-        var response = await _client.SendEmailAsync(msg);
-        return response.IsSuccessStatusCode;
+        // var to = new EmailAddress(user.Email, $"{user.Name} {user.Surname}");
+        // const string subject = "ValerioProdigit account confirmation";
+        // var plainTextContent = $"To confirm your account use this link {link}";
+        // var htmlContent = $"To confirm your account use this <a href=\"{link}\">link</a>";
+        // var msg = MailHelper.CreateSingleEmail(_from, to, subject, plainTextContent, htmlContent);
+        // var response = await _client.SendEmailAsync(msg);
+        // return response.IsSuccessStatusCode;
+        return true;
     }
 
     public async Task<bool> SendReservationCreated(ApplicationUser user, Reservation reservation)

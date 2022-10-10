@@ -16,7 +16,7 @@ public static class ConfigureEmailServiceExtension
         else
         {
             using var scope = builder.Services.BuildServiceProvider().CreateScope();
-            var logger = scope.ServiceProvider.GetRequiredService<ILogger>();
+            var logger = scope.ServiceProvider.GetRequiredService<ILogger<SendGridSettings>>();
             logger.LogWarning("SendGrid is not configured. Using EmptyEmailSender instead.");
             
             builder.Services.AddSingleton<IEmailSender, EmptyEmailService>();

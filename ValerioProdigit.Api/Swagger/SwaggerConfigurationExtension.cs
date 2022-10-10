@@ -54,47 +54,43 @@ public static class SwaggerConfigurationExtension
 
     private static void AddSwaggerDoc(this SwaggerGenOptions option, WebApplicationBuilder builder)
     {
-        SwaggerSettings? swaggerSettings = builder.Configuration.GetSection("Swaggerz").Get<SwaggerSettings>();
+        SwaggerSettings? swaggerSettings = builder.Configuration.GetSection("Swagger").Get<SwaggerSettings>();
         
-        var contactInfo = new OpenApiContact()
-        {
-            Name = swaggerSettings.Contact.Name,
-            Email = swaggerSettings.Contact.Email,
-            Url = new Uri(swaggerSettings.Contact.Url)
-        };
-
-        var license = new OpenApiLicense()
-        {
-            Name = swaggerSettings.License.Name,
-            Url = new Uri(swaggerSettings.License.Url)
-        };
-
-        var info = new OpenApiInfo()
-        {
-            Version = swaggerSettings.Info.Version,
-            Title = swaggerSettings.Info.Title,
-            Description = swaggerSettings.Info.Description,
-            Contact = contactInfo,
-            License = license,
-        };
-
         if (swaggerSettings is null)
         {
             using var scope = builder.Services.BuildServiceProvider().CreateScope();
-            var logger = scope.ServiceProvider.GetRequiredService<ILogger>();
+            var logger = scope.ServiceProvider.GetRequiredService<ILogger<SwaggerSettings>>();
             logger.LogWarning("Swagger settings not found");
             return;
         }
 
-        if (!swaggerSettings.IsValid(out var error))
+        var info = new OpenApiInfo();
+
+        if (swaggerSettings.Contact is not null)
         {
-            using var scope = builder.Services.BuildServiceProvider().CreateScope();
-            var logger = scope.ServiceProvider.GetRequiredService<ILogger>();
-            logger.LogWarning("Swagger settings not valid: {error}", error);
-            return;
+            info.Contact = new OpenApiContact()
+            {
+                Name = swaggerSettings.Contact.Name,
+                Email = swaggerSettings.Contact.Email,
+                Url = new Uri(swaggerSettings.Contact.Url)
+            };
         }
-        
-        option.SwaggerDoc(swaggerSettings.Info.Version.ToLower(), info);
+
+        if (swaggerSettings.License is not null)
+        {
+            info.License = new OpenApiLicense()
+            {
+                Name = swaggerSettings.License.Name,
+                Url = new Uri(swaggerSettings.License.Url)
+            };
+        }
+
+        info.Version = swaggerSettings.Info?.Version;
+        info.Title = swaggerSettings.Info?.Title;
+        info.Description = swaggerSettings.Info?.Description;
+
+        var version = swaggerSettings.Info?.Version.ToLower() ?? "v1";
+        option.SwaggerDoc(version, info);
     }
 	
     public static void UseSwaggerEndpoint(this WebApplication app)

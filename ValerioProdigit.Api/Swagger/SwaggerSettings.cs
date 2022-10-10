@@ -2,31 +2,10 @@
 
 public class SwaggerSettings
 {
-	public SwaggerContactSettings Contact { get; set; } = default!;
-	public SwaggerLicenseSettings License { get; set; } = default!;
-	public SwaggerInfoSettings Info { get; set; } = default!;
-
-	//Todo: add more checks
-	public bool IsValid(out string error)
-	{
-		error = "";
-		if (Contact is null)
-		{
-			error = "Contact is null";
-			return false;
-		}
-		if (License is null)
-		{
-			error = "License is null";
-			return false;
-		}
-		if (Info is null)
-		{
-			error = "Info is null";
-			return false;
-		}
-		return true;
-	}
+	public SwaggerContactSettings? Contact { get; set; } = default!;
+	public SwaggerLicenseSettings? License { get; set; } = default!;
+	public SwaggerInfoSettings? Info { get; set; } = default!;
+	
 }
 
 public class SwaggerContactSettings

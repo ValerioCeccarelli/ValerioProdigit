@@ -89,7 +89,7 @@ public sealed class AddEndpoint : IEndpointsMapper
             });
         }
         
-        logger.LogClassroomCreated(classroom);
+        logger.LogClassroomCreated(classroom, building.Code);
 
         var path = httpContext.Request.Scheme + "://" + httpContext.Request.Host + "/Classroom/Get/" + hashids.Encode(classroom.Id);
         return Results.Created(path, new AddClassroomResponse());

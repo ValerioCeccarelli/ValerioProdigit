@@ -36,7 +36,7 @@ public static partial class LogsExtension
 	public static partial void LogClassroomCreated(this ILogger logger, string classroomCode, string buildingCode, int classroomId);
 	
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static void LogClassroomCreated(this ILogger logger, Classroom classroom) => LogClassroomCreated(logger, classroom.Code, classroom.Building.Code, classroom.Id);
+	public static void LogClassroomCreated(this ILogger logger, Classroom classroom, string buildingCode) => LogClassroomCreated(logger, classroom.Code, buildingCode, classroom.Id);
 
 	[LoggerMessage(
 		EventId = 5,

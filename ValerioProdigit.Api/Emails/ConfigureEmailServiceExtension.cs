@@ -8,18 +8,15 @@ public static class ConfigureEmailServiceExtension
     {
         var settings = builder.Configuration.GetSection("Settings:SendGridSettings").Get<SendGridSettings>();
 
-        if (settings is not null && settings.IsActive)
-        {
-            var service = new SendGridEmailService(settings.Token, settings.ServiceEmail, settings.ServiceName);
-            builder.Services.AddSingleton<IEmailSender>(service);
-        }
-        else
+        if (settings is null)
         {
             using var scope = builder.Services.BuildServiceProvider().CreateScope();
             var logger = scope.ServiceProvider.GetRequiredService<ILogger<SendGridSettings>>();
-            logger.LogWarning("SendGrid is not configured. Using EmptyEmailSender instead.");
-            
-            builder.Services.AddSingleton<IEmailSender, EmptyEmailService>();
+            logger.LogError("SendGridSettings is required");
+            throw new Exception("SendGridSettings is required");
         }
+        
+        var service = new SendGridEmailService(settings.Token, settings.ServiceEmail, settings.ServiceName);
+        builder.Services.AddSingleton<IEmailSender>(service);
     }
 }

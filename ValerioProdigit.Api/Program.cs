@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using ValerioProdigit.Api.Auth;
 using ValerioProdigit.Api.Data;
 using ValerioProdigit.Api.Emails;
@@ -28,6 +29,7 @@ builder.ConfigureSwagger();
 
 var app = builder.Build();
 
+app.MigrateDatabase();
 await app.InitRolesAsync();
 
 app.UseHttpsRedirection();

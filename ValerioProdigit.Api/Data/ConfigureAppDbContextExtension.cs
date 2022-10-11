@@ -12,4 +12,11 @@ public static class ConfigureAppDbContextExtension
             option.UseSqlite(connectionString);
         });
     }
+
+    public static void MigrateDatabase(this WebApplication app)
+    {
+        using var scope = app.Services.CreateScope();
+        var appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        appDbContext.Database.Migrate();
+    }
 }

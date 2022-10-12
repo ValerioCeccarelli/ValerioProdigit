@@ -16,17 +16,17 @@ Major improvements:
 The following example shows how to reserve a seat for a specific lesson.
 1) login as a student with a registered account to get the authentication json web token:
    ![login_request_example](ReadmeData/login_request.png "login_request_example")
-2) copy the token form the OK response:
+2) copy the token from the OK response:
    ![login_response_example](ReadmeData/login_response.png "login_response_example")
 3) paste the token in the "Authorize" field of the swagger documentation (in the top right corner):
    ![swagger_authorize_example](ReadmeData/authentication_popup.png "swagger_authorize_example")
-   replace "\<token>" with the token you copied in step 2; this action will allow you to make authenticated requests by put the token in the "Authorization" header of the request.
-   (ATTENTION: the token expires after few minutes as configured in the appsettings.json file)
+   replace "\<token>" with the token copied in step 2; this action will allow to make authenticated requests by putting the token in the "Authorization" header of the request.
+   (ATTENTION: the token expires after a few minutes as configured in the appsettings.json file)
 4) retrieve the list of the available lessons of a specific teacher for a specific day:
    ![lessons_request_example](ReadmeData/lessons_request.png "lessons_request_example")
-5) copy the id of the lesson you want to reserve:
+5) copy the id of the lesson to reserve:
    ![lessons_response_example](ReadmeData/lessons_response.png "lessons_response_example")
-6) reserve the seat for the lesson you selected:
+6) reserve the seat for the selected lesson:
    ![reservation_request_example](ReadmeData/reservation_request.png "reservation_request_example")
 
 ## How to run
